@@ -8,6 +8,8 @@
 #ifndef SPROUT_CONFIG_CONFIG_HPP
 #define SPROUT_CONFIG_CONFIG_HPP
 
+#include <sprout/config/_config.hpp>
+
 #ifndef SPROUT_CONFIG_DISABLE_USER_CONFIG
 #	include <sprout/config/user_config.hpp>
 #endif	// #ifndef SPROUT_CONFIG_DISABLE_USER_CONFIG
