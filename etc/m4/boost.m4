@@ -1403,7 +1403,7 @@ LDFLAGS="$LDFLAGS $BOOST_SYSTEM_LDFLAGS $BOOST_FILESYSTEM_LDFLAGS \
 $BOOST_DATE_TIME_LDFLAGS $BOOST_THREAD_LDFLAGS"
 BOOST_FIND_LIB([wave], [$1],
                 [boost/wave.hpp],
-                [boost::wave::token_id id; get_token_name(id);])
+                [boost::wave::token_id id{ }; get_token_name(id);])
 LIBS=$boost_wave_save_LIBS
 LDFLAGS=$boost_wave_save_LDFLAGS
 ])# BOOST_WAVE
