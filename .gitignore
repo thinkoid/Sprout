@@ -219,3 +219,5 @@ _config.hpp*
 /libs/weed/example/as_tuple
 /libs/weed/example/remove_space
 /tools/files/filegraph
+/test-driver
+/configure~
