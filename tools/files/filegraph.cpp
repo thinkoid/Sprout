@@ -305,9 +305,9 @@ int main(int argc, const char* argv[]) {
 
 		if (!src.empty()) {
 			// run preprocessor
-			for (auto&& e : ctx) {
-				//std::cout << e.get_value();
-			}
+            for (auto&& ignore: ctx) {
+                (void)ignore;
+            }
 		}
 
 		for ( ; ;) {
