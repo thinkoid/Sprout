@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 
 	std::ifstream ifs(argv[1], std::ios_base::in | std::ios_base::binary);
 	std::istreambuf_iterator<char> it(ifs);
-	std::istreambuf_iterator<char> last;
+
 	std::cout
 		<< "#if defined(COMPOST_LOADING_SOURCE_VERSION)\n"
 			"\n"
