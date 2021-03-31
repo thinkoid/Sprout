@@ -221,3 +221,4 @@ _config.hpp*
 /tools/files/filegraph
 /test-driver
 /configure~
+/libs/math/test/libs_math_test_trunc
