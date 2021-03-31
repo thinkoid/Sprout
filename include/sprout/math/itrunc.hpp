@@ -60,7 +60,8 @@ namespace sprout {
 		itrunc(FloatType x) {
 			return sprout::math::isnan(x) || sprout::math::isinf(x) ? sprout::numeric_limits<To>::min()
 				: x == 0 ? To(0)
-				: sprout::numeric_limits<To>::max() < x || sprout::numeric_limits<To>::min() > x
+                : (static_cast<FloatType>(sprout::numeric_limits<To>::max()) < x ||
+                   static_cast<FloatType>(sprout::numeric_limits<To>::min()) > x)
 					? SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("itrunc: large float rounding."), static_cast<To>(x))
 				: static_cast<To>(x)
 				;

@@ -51,7 +51,8 @@ namespace sprout {
 				: sprout::math::detail::builtin_trunc(x)
 #else
 				: x == 0 ? x
-				: sprout::numeric_limits<std::uintmax_t>::max() < x || sprout::numeric_limits<std::uintmax_t>::max() < -x
+                : (static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) <  x ||
+                   static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) < -x)
 					? SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("trunc: large float rounding."), x)
 				: x < 0 ? -static_cast<FloatType>(static_cast<std::uintmax_t>(-x))
 				: static_cast<FloatType>(static_cast<std::uintmax_t>(x))
