@@ -788,7 +788,7 @@ BOOST_DEFUN([CRC],
 BOOST_DEFUN([Date_Time],
 [BOOST_FIND_LIB([date_time], [$1],
                 [boost/date_time/posix_time/posix_time.hpp],
-                [boost::posix_time::ptime t;])
+                [boost::posix_time::ptime t; (void)t;])
 ])# BOOST_DATE_TIME
 
 
