@@ -25,41 +25,42 @@
 #include <sprout/assert.hpp>
 
 namespace sprout {
-	namespace random {
-		//
-		// linear_congruential_engine
-		//
-		template<typename UIntType, UIntType a, UIntType c, UIntType m>
-		class linear_congruential_engine {
-			static_assert(sprout::numeric_limits<UIntType>::is_integer, "sprout::numeric_limits<UIntType>::is_integer");
-			static_assert(m == 0 || a < m, "m == 0 || a < m");
-			static_assert(m == 0 || c < m, "m == 0 || c < m");
-		public:
-			typedef UIntType result_type;
-		private:
-			struct private_construct_t {};
-		public:
-			SPROUT_STATIC_CONSTEXPR result_type multiplier = a;
-			SPROUT_STATIC_CONSTEXPR result_type increment = c;
-			SPROUT_STATIC_CONSTEXPR result_type modulus = m;
-			SPROUT_STATIC_CONSTEXPR result_type default_seed = 1;
-		public:
-			static SPROUT_CONSTEXPR result_type static_min() SPROUT_NOEXCEPT {
-				return increment == 0 ? 1 : 0;
-			}
-			static SPROUT_CONSTEXPR result_type static_max() SPROUT_NOEXCEPT {
-				return modulus - 1;
-			}
-		private:
-			static SPROUT_CONSTEXPR result_type init_seed_3(result_type x0) {
-				return SPROUT_ASSERT(sprout::math::greater_equal(x0, static_min())), SPROUT_ASSERT(x0 <= static_max()), x0;
-			}
-			static SPROUT_CONSTEXPR result_type init_seed_2(result_type x0) {
-				return init_seed_3(increment == 0 && x0 == 0 ? 1 : x0);
-			}
-			static SPROUT_CONSTEXPR result_type init_seed_1(result_type x0) {
-				return init_seed_2(x0 <= 0 && x0 != 0 ? x0 + modulus : x0);
-			}
+    namespace random {
+        //
+        // linear_congruential_engine
+        //
+        template<typename UIntType, UIntType a, UIntType c, UIntType m>
+        class linear_congruential_engine {
+            static_assert(sprout::numeric_limits<UIntType>::is_integer, "sprout::numeric_limits<UIntType>::is_integer");
+            static_assert(m == 0 || a < m, "m == 0 || a < m");
+            static_assert(m == 0 || c < m, "m == 0 || c < m");
+        public:
+            typedef UIntType result_type;
+        private:
+            struct private_construct_t {};
+        public:
+            SPROUT_STATIC_CONSTEXPR result_type multiplier = a;
+            SPROUT_STATIC_CONSTEXPR result_type increment = c;
+            SPROUT_STATIC_CONSTEXPR result_type modulus = m;
+            SPROUT_STATIC_CONSTEXPR result_type default_seed = 1;
+        public:
+            static SPROUT_CONSTEXPR result_type static_min() SPROUT_NOEXCEPT {
+                return increment == 0 ? 1 : 0;
+            }
+            static SPROUT_CONSTEXPR result_type static_max() SPROUT_NOEXCEPT {
+                return modulus - 1;
+            }
+        private:
+            static SPROUT_CONSTEXPR result_type init_seed_3(result_type x0) {
+                return SPROUT_ASSERT(sprout::math::greater_equal(x0, static_min())), SPROUT_ASSERT(x0 <= static_max()), x0;
+            }
+            static SPROUT_CONSTEXPR result_type init_seed_2(result_type x0) {
+                return init_seed_3(increment == 0 && x0 == 0 ? 1 : x0);
+            }
+            static SPROUT_CONSTEXPR result_type init_seed_1(result_type x0) {
+                return init_seed_2(
+                    std::numeric_limits< result_type >::is_signed && x0 < 0 ? x0 + modulus : x0);
+            }
 			static SPROUT_CONSTEXPR result_type init_seed(result_type x0 = default_seed) {
 				return init_seed_1(modulus == 0 ? x0 : x0 % modulus);
 			}
