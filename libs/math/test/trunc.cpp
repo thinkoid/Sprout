@@ -14,11 +14,21 @@ namespace utf = boost::unit_test;
 
 #include <sprout/math/trunc.hpp>
 
+#include <limits>
+
 BOOST_AUTO_TEST_SUITE(libs_math_trunc)
 
-BOOST_AUTO_TEST_CASE(libs_math_trunc_)
+BOOST_AUTO_TEST_CASE(libs_math_trunc_float)
 {
-    const auto result = sprout::math::trunc(18446744073709551616.);
+    constexpr auto x = (std::numeric_limits< uintmax_t >::max)();
+    const auto result = sprout::math::trunc(static_cast< float >(x));
+    BOOST_TEST(result != 0.);
+}
+
+BOOST_AUTO_TEST_CASE(libs_math_trunc_double)
+{
+    constexpr auto x = (std::numeric_limits< uintmax_t >::max)();
+    const auto result = sprout::math::trunc(static_cast< double >(x));
     BOOST_TEST(result != 0.);
 }
 
