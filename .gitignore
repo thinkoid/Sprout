@@ -222,3 +222,4 @@ _config.hpp*
 /test-driver
 /configure~
 /libs/math/test/libs_math_test_trunc
+/libs/random/example/libs_random_example_array
