@@ -68,9 +68,12 @@ namespace sprout {
 				: sprout::math::detail::builtin_ceil(x)
 #else
 				: x == 0 ? x
-				: sprout::numeric_limits<std::uintmax_t>::max() < x || sprout::numeric_limits<std::uintmax_t>::max() < -x
-					? SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("ceil: large float rounding."), x)
-				: static_cast<FloatType>(sprout::math::detail::ceil_impl(static_cast<typename sprout::math::detail::float_compute<FloatType>::type>(x)))
+                : (static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) <  x ||
+                   static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) < -x)
+                ? SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("ceil: large float rounding."), x)
+                : static_cast<FloatType>(
+                    sprout::math::detail::ceil_impl(
+                        static_cast<typename sprout::math::detail::float_compute<FloatType>::type>(x)))
 #endif
 				;
 		}
