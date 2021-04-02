@@ -4,12 +4,6 @@ EXTRA_DIST =
 
 include $(top_srcdir)/Makefile.common
 
-BOOST_CPPFLAGS =                                \
-	$(BOOST_FILESYSTEM_CPPFLAGS)                \
-	$(BOOST_WAVE_CPPFLAGS)                      \
-	$(BOOST_SYSTEM_CPPFLAGS)                    \
-	$(BOOST_THREAD_CPPFLAGS)
-
 BOOST_LDFLAGS_ =                                \
 	$(BOOST_FILESYSTEM_LDFLAGS)                 \
 	$(BOOST_WAVE_LDFLAGS)                       \
