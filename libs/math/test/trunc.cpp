@@ -20,16 +20,23 @@ BOOST_AUTO_TEST_SUITE(libs_math_trunc)
 
 BOOST_AUTO_TEST_CASE(libs_math_trunc_float)
 {
-    constexpr auto x = (std::numeric_limits< uintmax_t >::max)();
+    const auto x = (std::numeric_limits< uintmax_t >::max)();
     const auto result = sprout::math::trunc(static_cast< float >(x));
-    BOOST_TEST(result != 0.);
+    BOOST_TEST(result == static_cast< float >(x));
 }
 
 BOOST_AUTO_TEST_CASE(libs_math_trunc_double)
 {
-    constexpr auto x = (std::numeric_limits< uintmax_t >::max)();
+    const auto x = (std::numeric_limits< uintmax_t >::max)();
     const auto result = sprout::math::trunc(static_cast< double >(x));
-    BOOST_TEST(result != 0.);
+    BOOST_TEST(result == static_cast< double >(x));
+}
+
+BOOST_AUTO_TEST_CASE(libs_math_trunc_long_double)
+{
+    const auto x = (std::numeric_limits< uintmax_t >::max)();
+    const auto result = sprout::math::trunc(static_cast< long double >(x));
+    BOOST_TEST(result == static_cast< long double >(x));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
