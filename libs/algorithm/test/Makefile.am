@@ -3,9 +3,10 @@
 EXTRA_DIST =
 
 include $(top_srcdir)/Makefile.common
-LIBS += $(BOOST_UNIT_TEST_FRAMEWORK_LIBS)
 
-LDADD =
+AM_CPPFLAGS += $(BOOST_CPPFLAGS)
+AM_LDFLAGS = $(BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS)
+LDADD = $(LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIBS)
 
 check_PROGRAMS =                                            \
 	libs_algorithm_test_adjacent_find                       \
