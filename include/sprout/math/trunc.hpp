@@ -34,28 +34,32 @@ namespace sprout {
 				return __builtin_truncl(x);
 			}
 #endif
-		}	// namespace detail
+        }	// namespace detail
 		//
 		// trunc
 		//
 		template<
-			typename FloatType,
-			typename sprout::enabler_if<std::is_floating_point<FloatType>::value>::type = sprout::enabler
+            typename T,
+            typename sprout::enabler_if<
+                std::is_floating_point< T >::value
+                >::type = sprout::enabler
 		>
-		inline SPROUT_CONSTEXPR FloatType
-		trunc(FloatType x) {
-			return sprout::math::isnan(x) ? x
-				: x == sprout::numeric_limits<FloatType>::infinity() ? sprout::numeric_limits<FloatType>::infinity()
-				: x == -sprout::numeric_limits<FloatType>::infinity() ? -sprout::numeric_limits<FloatType>::infinity()
+        inline SPROUT_CONSTEXPR T
+        trunc(T x) {
+            return sprout::math::isnan(x) ? x
+                : x ==  sprout::numeric_limits< T >::infinity() ?  sprout::numeric_limits< T >::infinity()
+                : x == -sprout::numeric_limits< T >::infinity() ? -sprout::numeric_limits< T >::infinity()
 #if SPROUT_USE_BUILTIN_CMATH_FUNCTION
-				: sprout::math::detail::builtin_trunc(x)
+                : sprout::math::detail::builtin_trunc(x)
 #else
-				: x == 0 ? x
-                : (static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) <  x ||
-                   static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) < -x)
-					? SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("trunc: large float rounding."), x)
-				: x < 0 ? -static_cast<FloatType>(static_cast<std::uintmax_t>(-x))
-				: static_cast<FloatType>(static_cast<std::uintmax_t>(x))
+                : x == 0 ? x
+                : x > 0
+                ? ( x < static_cast< T >(sprout::numeric_limits< std::uintmax_t >::max())
+                   ? static_cast< T >(static_cast< std::uintmax_t >(x))
+                   : SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("trunc: large float rounding."), x))
+                : (-x < static_cast<T>(sprout::numeric_limits< std::uintmax_t >::max())
+                   ? -static_cast< T >(static_cast< std::uintmax_t >(-x))
+                   : SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("trunc: large float rounding."), x))
 #endif
 				;
 		}
