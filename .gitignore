@@ -223,3 +223,4 @@ _config.hpp*
 /configure~
 /libs/math/test/libs_math_test_trunc
 /libs/random/example/libs_random_example_array
+/libs/math/test/libs_math_test_ceil
