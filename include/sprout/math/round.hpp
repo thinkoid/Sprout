@@ -62,22 +62,29 @@ namespace sprout {
 		// round
 		//
 		template<
-			typename FloatType,
-			typename sprout::enabler_if<std::is_floating_point<FloatType>::value>::type = sprout::enabler
-		>
-		inline SPROUT_CONSTEXPR FloatType
-		round(FloatType x) {
-			return sprout::math::isnan(x) ? x
-				: x == sprout::numeric_limits<FloatType>::infinity() ? sprout::numeric_limits<FloatType>::infinity()
-				: x == -sprout::numeric_limits<FloatType>::infinity() ? -sprout::numeric_limits<FloatType>::infinity()
+            typename T,
+            typename sprout::enabler_if<std::is_floating_point<T>::value>::type = sprout::enabler
+        >
+        inline SPROUT_CONSTEXPR T
+        round(T x) {
+            return sprout::math::isnan(x) ? x
+                : x ==  sprout::numeric_limits<T>::infinity() ?  sprout::numeric_limits<T>::infinity()
+                : x == -sprout::numeric_limits<T>::infinity() ? -sprout::numeric_limits<T>::infinity()
 #if SPROUT_USE_BUILTIN_CMATH_FUNCTION
 				: sprout::math::detail::builtin_round(x)
 #else
-				: x == 0 ? x
-                : (static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) <  x ||
-                   static_cast<FloatType>(sprout::numeric_limits<std::uintmax_t>::max()) < -x)
-					? SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("round: large float rounding."), x)
-				: static_cast<FloatType>(sprout::math::detail::round_impl(static_cast<typename sprout::math::detail::float_compute<FloatType>::type>(x)))
+                : x == 0 ? x
+                : x > 0
+                ? ( x < static_cast< T >(sprout::numeric_limits< std::uintmax_t >::max())
+                   ? static_cast<T>(
+                       sprout::math::detail::round_impl(
+                           static_cast< typename sprout::math::detail::float_compute< T >::type >(x)))
+                   : SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("round: large float rounding."), x))
+                : (-x < static_cast<T>(sprout::numeric_limits< std::uintmax_t >::max())
+                   ? static_cast<T>(
+                       sprout::math::detail::round_impl(
+                           static_cast< typename sprout::math::detail::float_compute< T >::type >(x)))
+                   : SPROUT_MATH_THROW_LARGE_FLOAT_ROUNDING(std::runtime_error("round: large float rounding."), x))
 #endif
 				;
 		}
